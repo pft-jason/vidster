@@ -41,24 +41,28 @@
         </div>
     </menu>
 
+    <!-- <main class="ml-20 lg:ml-[18.5rem] md:mr-20 p-4"> -->
     <main class="ml-20 lg:ml-[18.5rem] md:mr-20 p-4">
-        {% for item in media %}
-        <article class="relative overflow-hidden rounded-lg mb-4">
-            <!-- Embed video using the precomputed embed URL -->
-             {% if item.thumbnail_url %}
-                <img src="{{ item.thumbnail_url }}" alt="">
-                <h1>{{ item.title }}</h1>
-             {% endif %} 
-            <!-- <iframe
-                class="w-full h-full"
-                src="{{ item.embed_url }}"
-                frameborder="0"
-                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen>
-            </iframe> -->
-        </article>
-        {% endfor %}
+        <div class="grid grid-col lg:grid-cols-2 xl:grid-cols-3 gap-4">
+            {% for item in media %}
+            <a data-embed-url="{{ item.embed_url }}" class="relative aspect-video overflow-hidden rounded-lg">
+                <img class="w-full" src="{{ item.thumbnail_url }}" alt="">
+                <div class="absolute bottom-0 bg-black/50 bg-opacity-50 w-full p-2 text-white">
+                    <h3 class="truncate-title" title="{{ item.title }}">{{ item.title }}</h3>
+                </div>
+            </a>
+                            <iframe
+                    class="w-full h-full"
+                    src="{{ item.embed_url }}"
+                    frameborder="0"
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            {% endfor %}
+        </div>
     </main>
+
+
 
 <!-- RIGHT SIDEBAR -->
 <aside class="md:fixed right-0 top-0 h-screen w-20 z-10 flex flex-col justify-end pl-4 py-4 border-l border-neutral-200 dark:border-neutral-700">
@@ -71,6 +75,41 @@
     </button>
 </aside>
 </div>
+
+<div id="videoModal" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center hidden z-50">
+    <button id="closeModal" class="absolute top-4 right-4 text-white text-2xl">&times;</button>
+    <iframe id="videoPlayer" class="w-full h-full max-h-[100vh]" frameborder="0" allowfullscreen></iframe>
+</div>
+
+<script>
+    const videoModal = document.getElementById('videoModal');
+    const videoPlayer = document.getElementById('videoPlayer');
+    const closeModal = document.getElementById('closeModal');
+
+    // Handle thumbnail click
+    document.querySelectorAll('[data-embed-url]').forEach(thumbnail => {
+        thumbnail.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent default link behavior
+            const embedUrl = thumbnail.getAttribute('data-embed-url');
+            videoPlayer.src = embedUrl; // Set the iframe source to the embed URL
+            videoModal.classList.remove('hidden'); // Show the modal
+        });
+    });
+
+    // Handle modal close
+    closeModal.addEventListener('click', () => {
+        videoModal.classList.add('hidden'); // Hide the modal
+        videoPlayer.src = ''; // Clear the iframe source
+    });
+
+    // Close modal when clicking outside the iframe
+    videoModal.addEventListener('click', (event) => {
+        if (event.target === videoModal) {
+            videoModal.classList.add('hidden');
+            videoPlayer.src = '';
+        }
+    });
+</script>
 
 <script>
     const scrollButton = document.getElementById('scrollButton');

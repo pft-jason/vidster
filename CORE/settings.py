@@ -68,7 +68,9 @@ TEMPLATES = [
     },
 ]
 
-CSP_FRAME_ANCESTORS = ["'self'", "http://localhost:*"]
+CSP_FRAME_ANCESTORS = ["'self'", "http://localhost:*", "https://player.twitch.tv"]
+CSP_DEFAULT_SRC = ["'self'", "https://player.twitch.tv"]
+CSP_FRAME_SRC = ["https://player.twitch.tv"]
 
 WSGI_APPLICATION = 'CORE.wsgi.application'
 

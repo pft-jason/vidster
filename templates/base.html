@@ -16,6 +16,11 @@
         [x-cloak] {
            display: none !important; 
         }
+        .truncate-title {
+            white-space: nowrap;       /* Prevents the text from wrapping to the next line */
+            overflow: hidden;          /* Hides the overflowing text */
+            text-overflow: ellipsis;   /* Adds the ellipsis (...) to the truncated text */
+        }
         body {
             /* @apply font-light; */
         }
