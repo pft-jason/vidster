@@ -1,0 +1,14 @@
+<footer>
+    <div class="max-w-sm mx-auto text-center pt-8 pb-20 text-xs">
+        <p>By continuing, you agree to Vault's <a href="" class="font-semibold text-primary hover:underline">Terms of Service</a> and confirm that you have read Vault's <a href="" class="font-semibold text-primary hover:underline">Privacy Policy</a>.</p>
+    </div>
+    <div class="text-center p-5 border-t border-neutral-300 dark:border-neutral-700">
+        {% if request.resolver_match.url_name == 'email_signup' %}
+            <p>Already have an account? <a href="{% url 'email_login' %}" class="text-primary font-medium hover:underline">Log in</a>.</p>
+        {% else %}
+            <p>Don't have an account? <a href="{% url 'email_signup' %}" class="text-primary font-medium hover:underline">Sign Up</a>.</p>
+        {% endif %}
+    </div>
+    <div class="bg-primary h-8 flex items-center justify-end px-36 text-sm">
+        <p>© 2025 Vault</p>
+</footer>

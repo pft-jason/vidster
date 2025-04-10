@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="../static/images/icons8-media-outline-96.png">
+    <title>Vault</title>
+    <style type="text/tailwindcss">
+        @custom-variant dark (&:where(.dark, .dark *));
+        @theme {
+            --color-primary: oklch(64.8% 0.2 131.684);
+            --color-primary-dark: oklch(53.2% 0.157 131.589);
+        }
+        [x-cloak] {
+           display: none !important; 
+        }
+        body {
+            /* @apply font-light; */
+        }
+        h1 {
+            @apply text-[1.5rem] font-bold;
+        }
+        h3 {
+            @apply text-[1rem] font-semibold;
+        }
+        .input-field {
+            @apply bg-neutral-100 w-full px-3 py-2.5 border border-neutral-300 rounded-sm placeholder:text-neutral-400 dark:text-black focus:outline-hidden;
+        }
+        .button {
+            @apply bg-neutral-100 w-full px-3 py-2.5 rounded-sm font-medium text-neutral-400 text-sm cursor-not-allowed ;
+        }
+        .button-active {
+            @apply bg-primary hover:bg-primary-dark text-white cursor-pointer;
+        }
+        .menu-item {
+            @apply flex items-center gap-4 lg:px-3 py-3 lg:py-2 hover:bg-neutral-100 dark:hover:bg-neutral-900 rounded mb-2
+        }
+        .login-type-button {
+            @apply relative block p-3 rounded-lg border border-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-900 text-center font-medium text-sm
+        }
+    </style>
+</head>
+
+<body class="dark:text-white dark:bg-black">
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>

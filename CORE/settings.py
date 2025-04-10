@@ -56,7 +56,7 @@ ROOT_URLCONF = 'CORE.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -67,6 +67,8 @@ TEMPLATES = [
         },
     },
 ]
+
+CSP_FRAME_ANCESTORS = ["'self'", "http://localhost:*"]
 
 WSGI_APPLICATION = 'CORE.wsgi.application'
 
