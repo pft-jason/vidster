@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% include 'GALLERY/includes/menu.html' %}
+<main class="ml-20 lg:ml-[18.5rem] md:mr-20 p-4">
+    <div>
+        <ul class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {% for platform in platforms %}
+            <li class="bg-neutral-700 rounded-sm overflow-hidden flex items-center justify-center h-26 p-4">
+                <a href="{{ platform.homepage_url }}" target="_blank" class="w-full h-full flex items-center justify-center">
+                    <img class="w-full h-auto object-contain" src="{{ platform.logo_url }}" alt="{{ platform.name }} logo">
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</main>
+
+<aside class="md:fixed right-0 top-0 h-screen w-20 z-10 flex flex-col justify-end pl-4 py-4 border-l border-neutral-200 dark:border-neutral-700">
+    <button id="scrollButton" class="size-12 rounded-full bg-neutral-100 dark:bg-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-800 cursor-pointer flex items-center justify-center hidden">
+        <div class="size-6">
+            <svg viewBox="0 0 48 48" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="m24 20.24 13.17 13.17a1 1 0 0 0 1.42 0l2.82-2.82a1 1 0 0 0 0-1.42L25.06 12.82a1.5 1.5 0 0 0-2.12 0L6.59 29.17a1 1 0 0 0 0 1.42L9.4 33.4a1 1 0 0 0 1.42 0L24 20.24Z"></path>
+            </svg>
+        </div>
+    </button>
+</aside>
+
+{% endblock %}

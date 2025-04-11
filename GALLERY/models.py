@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import re
+from django.utils.timezone import now
 import requests
 from bs4 import BeautifulSoup
 from GALLERY.platforms import youtube, vimeo, pornhub, gayporntube, twitch
@@ -14,7 +15,6 @@ PLATFORM_CLASSES = {
 }
 
 class Media(models.Model):
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     url = models.URLField(unique=True)
     video_id = models.CharField(max_length=100, blank=True)
     site = models.CharField(max_length=50, blank=True, null=True) 
@@ -23,7 +23,10 @@ class Media(models.Model):
     thumbnail_url = models.URLField(blank=True, null=True)
     thumbnail_file = models.ImageField(upload_to='thumbnails/', blank=True, null=True)  
     created_at = models.DateTimeField(auto_now_add=True)
-    
+
+    # New field with the through model
+    users = models.ManyToManyField('auth.User', through='UserMedia', related_name='media')
+
     def __str__(self):
         return f"{self.site or 'Unknown'}: {self.url}"
     
@@ -77,3 +80,27 @@ class Media(models.Model):
                     return site, match.group(1)
 
         return None, None
+    
+class UserMedia(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    media = models.ForeignKey(Media, on_delete=models.CASCADE)
+    added_at = models.DateTimeField(default=now)  # Track when the user added the media
+
+    def __str__(self):
+        return f"{self.user.username} added {self.media.url} at {self.added_at}"
+
+class PlatformInfo(models.Model):
+    STATUS_CHOICES = [
+        ('active', 'Active'),
+        ('inactive', 'Inactive'),
+        ('under_development', 'Under Development'),
+    ]
+    name = models.CharField(max_length=50, unique=True)
+    homepage_url = models.URLField()
+    logo_url = models.URLField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='active')
+    nsfw = models.BooleanField(default=False) 
+
+    def __str__(self):
+        return self.name

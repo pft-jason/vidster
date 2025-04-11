@@ -35,8 +35,8 @@ class Twitch(PlatformBase):
 
     @staticmethod
     def generate_embed_url(video_id):
-        return f"https://player.twitch.tv/?video={video_id}&parent=localhost&autoplay=false"
-
+        return f"https://player.twitch.tv/?video={video_id}&parent=127.0.0.1&autoplay=false"
+    
     @staticmethod
     def fetch_thumbnail_and_title(video_id, url=None):
         if not Twitch.OAUTH_TOKEN:
