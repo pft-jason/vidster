@@ -9,36 +9,43 @@
     <main class="ml-20 lg:ml-[18.5rem] md:mr-20 p-4">
         <div class="grid grid-col lg:grid-cols-2 xl:grid-cols-3 gap-4">
             {% for item in media %}
-            <a data-embed-url="{{ item.embed_url }}" class="relative aspect-video overflow-hidden rounded-lg">
-                <img class="w-full" src="{{ item.thumbnail_url }}" alt="">
+            <a href="{% url 'media_detail' item.id %}" class="relative aspect-video overflow-hidden rounded-lg">
+                    <img class="w-full" src="{{ item.thumbnail }}" alt="">
+                
                 <div class="absolute bottom-0 bg-black/50 bg-opacity-50 w-full p-2 text-white">
                     <h3 class="truncate-title" title="{{ item.title }}">{{ item.title }}</h3>
                 </div>
             </a>
+            <!-- <a data-embed-url="{{ item.embed_url }}" class="relative aspect-video overflow-hidden rounded-lg">
+                <img class="w-full" src="{{ item.thumbnail }}" alt="">
+                <div class="absolute bottom-0 bg-black/50 bg-opacity-50 w-full p-2 text-white">
+                    <h3 class="truncate-title" title="{{ item.title }}">{{ item.title }}</h3>
+                </div>
+            </a> -->
             {% endfor %}
         </div>
     </main>
 
 
 
-<!-- RIGHT SIDEBAR -->
-<aside class="md:fixed right-0 top-0 h-screen w-20 z-10 flex flex-col justify-end pl-4 py-4 border-l border-neutral-200 dark:border-neutral-700">
-    <button id="scrollButton" class="size-12 rounded-full bg-neutral-100 dark:bg-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-800 cursor-pointer flex items-center justify-center hidden">
-        <div class="size-6">
-            <svg viewBox="0 0 48 48" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path d="m24 20.24 13.17 13.17a1 1 0 0 0 1.42 0l2.82-2.82a1 1 0 0 0 0-1.42L25.06 12.82a1.5 1.5 0 0 0-2.12 0L6.59 29.17a1 1 0 0 0 0 1.42L9.4 33.4a1 1 0 0 0 1.42 0L24 20.24Z"></path>
-            </svg>
-        </div>
-    </button>
-</aside>
+    <!-- RIGHT SIDEBAR -->
+    <aside class="md:fixed right-0 top-0 h-screen w-20 z-10 flex flex-col justify-end pl-4 py-4 border-l border-neutral-200 dark:border-neutral-700">
+        <button id="scrollButton" class="size-12 rounded-full bg-neutral-100 dark:bg-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-800 cursor-pointer flex items-center justify-center hidden">
+            <div class="size-6">
+                <svg viewBox="0 0 48 48" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="m24 20.24 13.17 13.17a1 1 0 0 0 1.42 0l2.82-2.82a1 1 0 0 0 0-1.42L25.06 12.82a1.5 1.5 0 0 0-2.12 0L6.59 29.17a1 1 0 0 0 0 1.42L9.4 33.4a1 1 0 0 0 1.42 0L24 20.24Z"></path>
+                </svg>
+            </div>
+        </button>
+    </aside>
 </div>
 
-<div id="videoModal" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center hidden z-50">
+<!-- <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center hidden z-50">
     <button id="closeModal" class="absolute top-4 right-4 text-white text-2xl">&times;</button>
     <iframe id="videoPlayer" class="w-full h-full max-h-[100vh]" frameborder="0" allowfullscreen></iframe>
-</div>
+</div> -->
 
-<script>
+<!-- <script>
     const videoModal = document.getElementById('videoModal');
     const videoPlayer = document.getElementById('videoPlayer');
     const closeModal = document.getElementById('closeModal');
@@ -66,7 +73,7 @@
             videoPlayer.src = '';
         }
     });
-</script>
+</script> -->
 
 <script>
     const scrollButton = document.getElementById('scrollButton');

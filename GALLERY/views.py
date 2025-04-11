@@ -17,6 +17,14 @@ def gallery_home(request):
     }
     return render(request, 'GALLERY/gallery_home.html', context)
 
+def media_detail(request, id):
+    media = Media.objects.get(pk=id)
+    
+    context = {
+        'item': media,
+    }
+    return render(request, 'GALLERY/media_detail.html', context)
+
 def platform_list(request):
     platforms = PlatformInfo.objects.all()
     

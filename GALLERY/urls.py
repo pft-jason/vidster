@@ -5,4 +5,5 @@ urlpatterns = [
     path('', gallery_home, name="gallery_home"),
     path('platforms/', platform_list, name="platform_list"),
     path('api/save-url/', SaveUrlView.as_view(), name='save-url'),
+    path('media/<int:id>/', media_detail, name='media_detail'),
 ]

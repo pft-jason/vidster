@@ -4,7 +4,7 @@ import re
 from django.utils.timezone import now
 import requests
 from bs4 import BeautifulSoup
-from GALLERY.platforms import youtube, vimeo, pornhub, gayporntube, twitch
+from GALLERY.platforms import youtube, vimeo, pornhub, gayporntube, twitch, porkytube
 
 PLATFORM_CLASSES = {
     'YouTube': youtube.YouTube,
@@ -12,6 +12,7 @@ PLATFORM_CLASSES = {
     'Pornhub': pornhub.Pornhub,
     'GayPornTube': gayporntube.GayPornTube,
     'Twitch': twitch.Twitch,
+    'PorkyTube': porkytube.PorkyTube,
 }
 
 class Media(models.Model):
@@ -21,7 +22,7 @@ class Media(models.Model):
     title = models.CharField(max_length=255, blank=True, null=True)
     embed_url = models.URLField(blank=True, null=True)
     thumbnail_url = models.URLField(blank=True, null=True)
-    thumbnail_file = models.ImageField(upload_to='thumbnails/', blank=True, null=True)  
+    thumbnail_url_override = models.URLField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     # New field with the through model
@@ -29,6 +30,11 @@ class Media(models.Model):
 
     def __str__(self):
         return f"{self.site or 'Unknown'}: {self.url}"
+    
+    @property
+    def thumbnail(self):
+        """Return the thumbnail_url_override if it exists, otherwise thumbnail_url."""
+        return self.thumbnail_url_override or self.thumbnail_url
     
     def save(self, *args, **kwargs):
         # Detect the site and video ID
@@ -62,6 +68,10 @@ class Media(models.Model):
             'GayPornTube': {
                 'domain': r'gayporntube\.com',  # Match Pornhub domain
                 'regex': r'gayporntube\.com\/video\/(\d+)'  # Extract viewkey
+            },
+            'PorkyTube': {
+                'domain': r'porkytube\.com',  # Match Pornhub domain
+                'regex': r'porkytube\.com\/videos\/(\d+)'  # Extract video id
             },
             'Twitch': {  # Add Twitch support
                 'domain': r'twitch\.tv',  # Match Twitch domain
